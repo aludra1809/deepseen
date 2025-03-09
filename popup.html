@@ -73,6 +73,20 @@
         .option-label {
             margin-left: 10px;
         }
+
+        #defaultButton {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #defaultButton:hover {
+            background-color: #45a049;
+        }
     </style>
 </head>
 
@@ -80,19 +94,19 @@
     <h1>Chat Customizer</h1>
 
     <div class="color-option">
-        <span>You:</span>
+        <span>Your Dialogue Background:</span>
         <input type="color" id="bgColorPicker" value="#ffff00">
-        <span>Text:</span>
+        <span>Your Dialogue Text:</span>
         <input type="color" id="textColorPicker" value="#000000">
         <label class="toggle-switch">
             <input type="checkbox" id="yourDialogueColorToggle">
             <span class="slider"></span>
         </label>
-        <span class="option-label">Apply</span>
+        <span class="option-label">Apply Both Colors</span>
     </div>
 
     <div class="color-option">
-        <span>GPT:</span>
+        <span>GPT Dialogue Text Color:</span>
         <input type="color" id="gptTextColorPicker" value="#000000">
         <label class="toggle-switch">
             <input type="checkbox" id="gptTextColorToggle">
@@ -100,6 +114,8 @@
         </label>
         <span class="option-label">Apply Text Color</span>
     </div>
+
+    <button id="defaultButton">Default</button>
 
     <script src="popup.js"></script>
 </body>

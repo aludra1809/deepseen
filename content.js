@@ -58,6 +58,13 @@ if (typeof chrome !== "undefined" && chrome.storage) {
 			gptTextElements[i].style.transition = "background 0.5s ease-in-out";
 		}
 
+		// Apply the GPT text color to elements with the class .f6004764
+		const f6004764Elements = document.getElementsByClassName("f6004764");
+		for (let i = 0; i < f6004764Elements.length; i++) {
+			f6004764Elements[i].style.backgroundColor = gptTextColor || ""; // Reset if empty
+			f6004764Elements[i].style.transition = "background-color 0.5s ease-in-out"; // Optional transition
+		}
+
 		// Darken the GPT text color for .md-code-block
 		const darkenedColor = darkenColor(gptTextColor, 20); // Darken by 20%
 
@@ -66,6 +73,36 @@ if (typeof chrome !== "undefined" && chrome.storage) {
 		for (let i = 0; i < mdCodeBlocks.length; i++) {
 			mdCodeBlocks[i].style.backgroundColor = darkenedColor || ""; // Reset if empty
 			mdCodeBlocks[i].style.transition = "background-color 0.5s ease-in-out"; // Optional transition
+		}
+	}
+
+	// Function to apply default colors
+	function applyDefaultColors() {
+		const defaultUserBgColor = "rgb(84, 93, 39)";
+		const defaultGptBgColor = "rgb(42, 61, 71)";
+
+		// Apply default colors to user part
+		const userBgElements = document.getElementsByClassName("fbb737a4");
+		for (let i = 0; i < userBgElements.length; i++) {
+			userBgElements[i].style.backgroundColor = defaultUserBgColor;
+		}
+
+		// Apply default colors to GPT part
+		const gptBgElements = document.getElementsByClassName("f9bf7997");
+		for (let i = 0; i < gptBgElements.length; i++) {
+			gptBgElements[i].style.backgroundColor = defaultGptBgColor;
+		}
+
+		// Apply default colors to .f6004764
+		const f6004764Elements = document.getElementsByClassName("f6004764");
+		for (let i = 0; i < f6004764Elements.length; i++) {
+			f6004764Elements[i].style.backgroundColor = defaultGptBgColor;
+		}
+
+		// Apply default colors to .md-code-block
+		const mdCodeBlocks = document.getElementsByClassName("md-code-block");
+		for (let i = 0; i < mdCodeBlocks.length; i++) {
+			mdCodeBlocks[i].style.backgroundColor = defaultGptBgColor;
 		}
 	}
 
@@ -101,6 +138,8 @@ if (typeof chrome !== "undefined" && chrome.storage) {
 		if (message.action === "changeColors") {
 			changeYourDialogueColors(message.bgColor, message.textColor);
 			changeGptTextColor(message.gptTextColor);
+		} else if (message.action === "defaultColors") {
+			applyDefaultColors();
 		}
 	});
 

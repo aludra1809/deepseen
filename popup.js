@@ -2,10 +2,9 @@ document.addEventListener("DOMContentLoaded", () => {
 	const bgColorPicker = document.getElementById("bgColorPicker");
 	const textColorPicker = document.getElementById("textColorPicker");
 	const gptTextColorPicker = document.getElementById("gptTextColorPicker");
-	const yourDialogueColorToggle = document.getElementById(
-		"yourDialogueColorToggle"
-	);
+	const yourDialogueColorToggle = document.getElementById("yourDialogueColorToggle");
 	const gptTextColorToggle = document.getElementById("gptTextColorToggle");
+	const defaultButton = document.getElementById("defaultButton");
 
 	// Load settings from storage
 	chrome.storage.local.get(
@@ -17,28 +16,18 @@ document.addEventListener("DOMContentLoaded", () => {
 			"selectedGptTextColor",
 		],
 		(data) => {
-			if (data.selectedBgColor)
-				bgColorPicker.value = data.selectedBgColor;
-			if (data.selectedTextColor)
-				textColorPicker.value = data.selectedTextColor;
-			if (data.selectedGptTextColor)
-				gptTextColorPicker.value = data.selectedGptTextColor;
-			yourDialogueColorToggle.checked =
-				data.yourDialogueColorsEnabled ?? true; // Default to 'on'
-			gptTextColorToggle.checked = data.gptTextColorsEnabled ?? true; // Default to 'on'
+			if (data.selectedBgColor) bgColorPicker.value = data.selectedBgColor;
+			if (data.selectedTextColor) textColorPicker.value = data.selectedTextColor;
+			if (data.selectedGptTextColor) gptTextColorPicker.value = data.selectedGptTextColor;
+			yourDialogueColorToggle.checked = data.yourDialogueColorsEnabled ?? true;
+			gptTextColorToggle.checked = data.gptTextColorsEnabled ?? true;
 		}
 	);
 
 	function updateColors() {
-		const bgColor = yourDialogueColorToggle.checked
-			? bgColorPicker.value
-			: "";
-		const textColor = yourDialogueColorToggle.checked
-			? textColorPicker.value
-			: "";
-		const gptTextColor = gptTextColorToggle.checked
-			? gptTextColorPicker.value
-			: "";
+		const bgColor = yourDialogueColorToggle.checked ? bgColorPicker.value : "";
+		const textColor = yourDialogueColorToggle.checked ? textColorPicker.value : "";
+		const gptTextColor = gptTextColorToggle.checked ? gptTextColorPicker.value : "";
 
 		chrome.storage.local.set({
 			selectedBgColor: bgColorPicker.value,
@@ -48,7 +37,6 @@ document.addEventListener("DOMContentLoaded", () => {
 			gptTextColorsEnabled: gptTextColorToggle.checked,
 		});
 
-		// Send updated colors to content script
 		chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
 			chrome.tabs.sendMessage(tabs[0].id, {
 				action: "changeColors",
@@ -65,4 +53,13 @@ document.addEventListener("DOMContentLoaded", () => {
 	gptTextColorPicker.addEventListener("input", updateColors);
 	yourDialogueColorToggle.addEventListener("change", updateColors);
 	gptTextColorToggle.addEventListener("change", updateColors);
+
+	// Default button
+	defaultButton.addEventListener("click", () => {
+		chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+			chrome.tabs.sendMessage(tabs[0].id, {
+				action: "defaultColors",
+			});
+		});
+	});
 });
