@@ -44,16 +44,53 @@ if (typeof chrome !== "undefined" && chrome.storage) {
 		}
 	}
 
-	function changeGptTextColor(textColor) {
+	function changeGptTextColor(gptTextColor) {
 		const gptTextElements = document.getElementsByClassName("f9bf7997");
 		for (let i = 0; i < gptTextElements.length; i++) {
-			gptTextElements[i].style.transition = "color 0.5s ease-in-out";
-			gptTextElements[i].style.color = textColor || ""; // Reset if empty
+			// Apply the GPT text color as the background color
+			gptTextElements[i].style.background = gptTextColor || ""; // Reset if empty
 
-			// Add background and padding
-			gptTextElements[i].style.background = "#171d35";
-			gptTextElements[i].style.paddingBottom = "48px";
+			// Add padding-bottom and padding-top
+			gptTextElements[i].style.paddingBottom = "30px";
+			gptTextElements[i].style.paddingTop = "30px";
+
+			// Optional: Add a smooth transition for the background color
+			gptTextElements[i].style.transition = "background 0.5s ease-in-out";
 		}
+
+		// Darken the GPT text color for .md-code-block
+		const darkenedColor = darkenColor(gptTextColor, 20); // Darken by 20%
+
+		// Change the background color of .md-code-block elements
+		const mdCodeBlocks = document.getElementsByClassName("md-code-block");
+		for (let i = 0; i < mdCodeBlocks.length; i++) {
+			mdCodeBlocks[i].style.backgroundColor = darkenedColor || ""; // Reset if empty
+			mdCodeBlocks[i].style.transition = "background-color 0.5s ease-in-out"; // Optional transition
+		}
+	}
+
+	// Function to darken a hex color
+	function darkenColor(hex, percent) {
+		// Remove the '#' if it exists
+		hex = hex.replace(/^#/, "");
+
+		// Parse the hex color into RGB components
+		let r = parseInt(hex.substring(0, 2), 16);
+		let g = parseInt(hex.substring(2, 4), 16);
+		let b = parseInt(hex.substring(4, 6), 16);
+
+		// Darken each component by the specified percentage
+		r = Math.floor(r * (1 - percent / 100));
+		g = Math.floor(g * (1 - percent / 100));
+		b = Math.floor(b * (1 - percent / 100));
+
+		// Ensure the values stay within the valid range (0-255)
+		r = Math.max(0, Math.min(255, r));
+		g = Math.max(0, Math.min(255, g));
+		b = Math.max(0, Math.min(255, b));
+
+		// Convert the darkened RGB values back to a hex color
+		return `#${((1 << 24) | (r << 16) | (g << 8) | b).toString(16).slice(1)}`;
 	}
 
 	// Apply saved colors when content script is loaded
