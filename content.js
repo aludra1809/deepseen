@@ -49,6 +49,10 @@ if (typeof chrome !== "undefined" && chrome.storage) {
 		for (let i = 0; i < gptTextElements.length; i++) {
 			gptTextElements[i].style.transition = "color 0.5s ease-in-out";
 			gptTextElements[i].style.color = textColor || ""; // Reset if empty
+
+			// Add background and padding
+			gptTextElements[i].style.background = "#171d35";
+			gptTextElements[i].style.paddingBottom = "48px";
 		}
 	}
 

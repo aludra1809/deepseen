@@ -1,15 +1,15 @@
 {
 	"manifest_version": 3,
-	"name": "Background Color Changer",
+	"name": "DeepSeen",
 	"version": "1.0",
-	"description": "Changes the background color of elements with the class 'fbb737a4'.",
+	"description": "Find your propmts easily!!",
 	"permissions": ["activeTab", "scripting", "storage"],
 	"action": {
 		"default_popup": "popup.html",
 		"default_icon": {
-			"16": "images.png",
-			"48": "images.png",
-			"128": "images.png"
+			"16": "16.png",
+			"48": "48.png",
+			"128": "128.png"
 		}
 	},
 	"content_scripts": [
