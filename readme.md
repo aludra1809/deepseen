@@ -61,4 +61,4 @@ If you encounter any issues or have suggestions for improvement, please [open an
 
 ## Credits
 
-- Developed by **[Reza Shojaie](https://github.com/your-username)**.
+- Developed by **[Reza Shojaie](https://github.com/aludra1809)**.
