@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Chat Customizer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 10px;
+        }
+
+        .color-option {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        input[type="color"] {
+            margin-left: 10px;
+            width: 30px;
+            height: 20px;
+            border: none;
+            background: none;
+            cursor: pointer;
+        }
+
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 28px;
+            height: 16px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: 0.4s;
+            border-radius: 16px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 12px;
+            width: 12px;
+            left: 2px;
+            bottom: 2px;
+            background-color: white;
+            transition: 0.4s;
+            border-radius: 50%;
+        }
+
+        input:checked+.slider {
+            background-color: #4CAF50;
+        }
+
+        input:checked+.slider:before {
+            transform: translateX(12px);
+        }
+
+        .option-label {
+            margin-left: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Chat Customizer</h1>
+
+    <div class="color-option">
+        <span>Your Dialogue Background:</span>
+        <input type="color" id="bgColorPicker" value="#ffff00">
+        <span>Your Dialogue Text:</span>
+        <input type="color" id="textColorPicker" value="#000000">
+        <label class="toggle-switch">
+            <input type="checkbox" id="yourDialogueColorToggle">
+            <span class="slider"></span>
+        </label>
+        <span class="option-label">Apply Both Colors</span>
+    </div>
+
+    <div class="color-option">
+        <span>GPT Dialogue Text Color:</span>
+        <input type="color" id="gptTextColorPicker" value="#000000">
+        <label class="toggle-switch">
+            <input type="checkbox" id="gptTextColorToggle">
+            <span class="slider"></span>
+        </label>
+        <span class="option-label">Apply Text Color</span>
+    </div>
+
+    <script src="popup.js"></script>
+</body>
+
+</html>
