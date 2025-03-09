@@ -18,9 +18,8 @@
 ## Installation
 
 ### Method 1: Install from Chrome Web Store
-1. Visit the [DeepSeen Chrome Web Store page](https://chrome.google.com/webstore/detail/deepseen/your-extension-id).
-2. Click **Add to Chrome**.
-3. Confirm the installation by clicking **Add Extension**.
+1. Download the deepseen.crx file.
+3. Drag it into your chrome browser!
 
 ### Method 2: Load Unpacked Extension
 1. Download or clone this repository.
