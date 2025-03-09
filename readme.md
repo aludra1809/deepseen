@@ -17,7 +17,7 @@
 
 ## Installation
 
-### Method 1: Install from Chrome Web Store
+### Method 1: Download from github
 1. Download the deepseen.crx file.
 3. Drag it into your chrome browser!
 
