@@ -35,7 +35,15 @@ if (typeof chrome !== "undefined" && chrome.storage) {
 	function changeGptTextColor(gptTextColor) {
 		const gptTextElements = document.getElementsByClassName("f9bf7997");
 		for (let i = 0; i < gptTextElements.length; i++) {
+			// Apply the GPT text color as the background color
 			gptTextElements[i].style.backgroundColor = gptTextColor || "";
+
+			// Add padding: 48px
+			gptTextElements[i].style.padding = "48px";
+
+			// Calculate and apply a contrasting text color
+			const contrastColor = getContrastColor(gptTextColor);
+			gptTextElements[i].style.color = contrastColor;
 		}
 
 		// Apply the GPT text color to .md-code-block
@@ -50,6 +58,12 @@ if (typeof chrome !== "undefined" && chrome.storage) {
 		for (let i = 0; i < mdCodeBlockPres.length; i++) {
 			mdCodeBlockPres[i].style.backgroundColor = darkerColor || "";
 		}
+
+		// Apply the GPT text color to .c3ecdb44
+		const c3ecdb44Elements = document.getElementsByClassName("c3ecdb44");
+		for (let i = 0; i < c3ecdb44Elements.length; i++) {
+			c3ecdb44Elements[i].style.backgroundColor = gptTextColor || "";
+		}
 	}
 
 	function revertToDefaultColors() {
@@ -62,6 +76,8 @@ if (typeof chrome !== "undefined" && chrome.storage) {
 		const gptTextElements = document.getElementsByClassName("f9bf7997");
 		for (let i = 0; i < gptTextElements.length; i++) {
 			gptTextElements[i].style.backgroundColor = "";
+			gptTextElements[i].style.padding = ""; // Remove padding
+			gptTextElements[i].style.color = ""; // Revert to default text color
 		}
 
 		// Revert .md-code-block to the default color
@@ -75,6 +91,29 @@ if (typeof chrome !== "undefined" && chrome.storage) {
 		for (let i = 0; i < mdCodeBlockPres.length; i++) {
 			mdCodeBlockPres[i].style.backgroundColor = "";
 		}
+
+		// Revert .c3ecdb44 to the default color
+		const c3ecdb44Elements = document.getElementsByClassName("c3ecdb44");
+		for (let i = 0; i < c3ecdb44Elements.length; i++) {
+			c3ecdb44Elements[i].style.backgroundColor = "";
+		}
+	}
+
+	// Function to calculate a contrasting text color
+	function getContrastColor(hexColor) {
+		// Remove the '#' if it exists
+		hexColor = hexColor.replace(/^#/, "");
+
+		// Parse the hex color into RGB components
+		const r = parseInt(hexColor.substring(0, 2), 16);
+		const g = parseInt(hexColor.substring(2, 4), 16);
+		const b = parseInt(hexColor.substring(4, 6), 16);
+
+		// Calculate luminance (perceived brightness)
+		const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+
+		// Return black or white based on luminance
+		return luminance > 0.5 ? "#000000" : "#ffffff";
 	}
 
 	// Function to darken a hex color
