@@ -28,7 +28,12 @@ if (typeof chrome !== "undefined" && chrome.storage) {
 	function changeYourDialogueColors(bgColor) {
 		const bgElements = document.getElementsByClassName("fbb737a4");
 		for (let i = 0; i < bgElements.length; i++) {
+			// Apply the background color
 			bgElements[i].style.backgroundColor = bgColor || "";
+
+			// Calculate and apply a contrasting text color
+			const contrastColor = getContrastColor(bgColor);
+			bgElements[i].style.color = contrastColor || "";
 		}
 	}
 
@@ -59,6 +64,32 @@ if (typeof chrome !== "undefined" && chrome.storage) {
 			mdCodeBlockPres[i].style.backgroundColor = darkerColor || "";
 		}
 
+		// Apply the same darker background color to <code> tags
+		const codeTags = document.getElementsByTagName("code");
+		for (let i = 0; i < codeTags.length; i++) {
+			codeTags[i].style.backgroundColor = darkerColor || "";
+		}
+
+		// Apply the same darker background color to .cefa5c26 .dd442025
+		const cefa5c26Elements = document.querySelectorAll(".cefa5c26 .dd442025");
+		for (let i = 0; i < cefa5c26Elements.length; i++) {
+			cefa5c26Elements[i].style.backgroundColor = darkerColor || "";
+		}
+
+		// Apply the GPT color to .cbcaa82c and add padding-top
+		const cbcaa82cElements = document.getElementsByClassName("cbcaa82c");
+		for (let i = 0; i < cbcaa82cElements.length; i++) {
+			cbcaa82cElements[i].style.backgroundColor = gptTextColor || "";
+			cbcaa82cElements[i].style.paddingTop = "1rem"; // Add 1rem padding-top
+		}
+
+		// Apply contrasting text color to .cefa5c26 .c92459f0
+		const cefa5c26TextElements = document.querySelectorAll(".cefa5c26 .c92459f0");
+		const textContrastColor = getContrastColor(darkerColor);
+		for (let i = 0; i < cefa5c26TextElements.length; i++) {
+			cefa5c26TextElements[i].style.color = textContrastColor;
+		}
+
 		// Apply the GPT text color to .c3ecdb44
 		const c3ecdb44Elements = document.getElementsByClassName("c3ecdb44");
 		for (let i = 0; i < c3ecdb44Elements.length; i++) {
@@ -71,6 +102,7 @@ if (typeof chrome !== "undefined" && chrome.storage) {
 		const bgElements = document.getElementsByClassName("fbb737a4");
 		for (let i = 0; i < bgElements.length; i++) {
 			bgElements[i].style.backgroundColor = "";
+			bgElements[i].style.color = ""; // Revert to default text color
 		}
 
 		const gptTextElements = document.getElementsByClassName("f9bf7997");
@@ -90,6 +122,31 @@ if (typeof chrome !== "undefined" && chrome.storage) {
 		const mdCodeBlockPres = document.querySelectorAll(".md-code-block > pre");
 		for (let i = 0; i < mdCodeBlockPres.length; i++) {
 			mdCodeBlockPres[i].style.backgroundColor = "";
+		}
+
+		// Revert <code> tags to the default color
+		const codeTags = document.getElementsByTagName("code");
+		for (let i = 0; i < codeTags.length; i++) {
+			codeTags[i].style.backgroundColor = "";
+		}
+
+		// Revert .cefa5c26 .dd442025 to the default color
+		const cefa5c26Elements = document.querySelectorAll(".cefa5c26 .dd442025");
+		for (let i = 0; i < cefa5c26Elements.length; i++) {
+			cefa5c26Elements[i].style.backgroundColor = "";
+		}
+
+		// Revert .cbcaa82c to the default color and padding
+		const cbcaa82cElements = document.getElementsByClassName("cbcaa82c");
+		for (let i = 0; i < cbcaa82cElements.length; i++) {
+			cbcaa82cElements[i].style.backgroundColor = "";
+			cbcaa82cElements[i].style.paddingTop = ""; // Remove padding-top
+		}
+
+		// Revert .cefa5c26 .c92459f0 to the default color
+		const cefa5c26TextElements = document.querySelectorAll(".cefa5c26 .c92459f0");
+		for (let i = 0; i < cefa5c26TextElements.length; i++) {
+			cefa5c26TextElements[i].style.color = "";
 		}
 
 		// Revert .c3ecdb44 to the default color
