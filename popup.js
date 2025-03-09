@@ -2,7 +2,6 @@ document.addEventListener("DOMContentLoaded", () => {
 	const bgColorPicker = document.getElementById("bgColorPicker");
 	const gptTextColorPicker = document.getElementById("gptTextColorPicker");
 	const toggleButton = document.getElementById("toggleButton");
-	const defaultButton = document.getElementById("defaultButton");
 
 	let isOn = true; // Initially, the button is "on"
 
@@ -26,11 +25,9 @@ document.addEventListener("DOMContentLoaded", () => {
 		if (isOn) {
 			toggleButton.textContent = "On";
 			toggleButton.classList.remove("off");
-			defaultButton.disabled = false;
 		} else {
 			toggleButton.textContent = "Off";
 			toggleButton.classList.add("off");
-			defaultButton.disabled = true;
 		}
 	}
 
@@ -49,15 +46,6 @@ document.addEventListener("DOMContentLoaded", () => {
 				isOn,
 				bgColor: isOn ? bgColorPicker.value : "",
 				gptTextColor: isOn ? gptTextColorPicker.value : "",
-			});
-		});
-	});
-
-	// Default button click handler
-	defaultButton.addEventListener("click", () => {
-		chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-			chrome.tabs.sendMessage(tabs[0].id, {
-				action: "defaultColors",
 			});
 		});
 	});

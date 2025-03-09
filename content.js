@@ -37,6 +37,19 @@ if (typeof chrome !== "undefined" && chrome.storage) {
 		for (let i = 0; i < gptTextElements.length; i++) {
 			gptTextElements[i].style.backgroundColor = gptTextColor || "";
 		}
+
+		// Apply the GPT text color to .md-code-block
+		const mdCodeBlocks = document.getElementsByClassName("md-code-block");
+		for (let i = 0; i < mdCodeBlocks.length; i++) {
+			mdCodeBlocks[i].style.backgroundColor = gptTextColor || "";
+		}
+
+		// Apply a darker background color to .md-code-block > pre
+		const darkerColor = darkenColor(gptTextColor, 20); // Darken by 20%
+		const mdCodeBlockPres = document.querySelectorAll(".md-code-block > pre");
+		for (let i = 0; i < mdCodeBlockPres.length; i++) {
+			mdCodeBlockPres[i].style.backgroundColor = darkerColor || "";
+		}
 	}
 
 	function revertToDefaultColors() {
@@ -50,30 +63,42 @@ if (typeof chrome !== "undefined" && chrome.storage) {
 		for (let i = 0; i < gptTextElements.length; i++) {
 			gptTextElements[i].style.backgroundColor = "";
 		}
+
+		// Revert .md-code-block to the default color
+		const mdCodeBlocks = document.getElementsByClassName("md-code-block");
+		for (let i = 0; i < mdCodeBlocks.length; i++) {
+			mdCodeBlocks[i].style.backgroundColor = "";
+		}
+
+		// Revert .md-code-block > pre to the default color
+		const mdCodeBlockPres = document.querySelectorAll(".md-code-block > pre");
+		for (let i = 0; i < mdCodeBlockPres.length; i++) {
+			mdCodeBlockPres[i].style.backgroundColor = "";
+		}
 	}
 
-	function applyDefaultColors() {
-		const defaultUserBgColor = "rgb(84, 93, 39)";
-		const defaultGptBgColor = "rgb(42, 61, 71)";
+	// Function to darken a hex color
+	function darkenColor(hex, percent) {
+		// Remove the '#' if it exists
+		hex = hex.replace(/^#/, "");
 
-		// Save default colors to storage
-		chrome.storage.local.set({
-			selectedBgColor: defaultUserBgColor,
-			selectedGptTextColor: defaultGptBgColor,
-			isOn: true, // Ensure the toggle is "on" after applying defaults
-		});
+		// Parse the hex color into RGB components
+		let r = parseInt(hex.substring(0, 2), 16);
+		let g = parseInt(hex.substring(2, 4), 16);
+		let b = parseInt(hex.substring(4, 6), 16);
 
-		// Apply default colors to user part
-		const userBgElements = document.getElementsByClassName("fbb737a4");
-		for (let i = 0; i < userBgElements.length; i++) {
-			userBgElements[i].style.backgroundColor = defaultUserBgColor;
-		}
+		// Darken each component by the specified percentage
+		r = Math.floor(r * (1 - percent / 100));
+		g = Math.floor(g * (1 - percent / 100));
+		b = Math.floor(b * (1 - percent / 100));
 
-		// Apply default colors to GPT part
-		const gptBgElements = document.getElementsByClassName("f9bf7997");
-		for (let i = 0; i < gptBgElements.length; i++) {
-			gptBgElements[i].style.backgroundColor = defaultGptBgColor;
-		}
+		// Ensure the values stay within the valid range (0-255)
+		r = Math.max(0, Math.min(255, r));
+		g = Math.max(0, Math.min(255, g));
+		b = Math.max(0, Math.min(255, b));
+
+		// Convert the darkened RGB values back to a hex color
+		return `#${((1 << 24) | (r << 16) | (g << 8) | b).toString(16).slice(1)}`;
 	}
 
 	// Listen for messages to update colors
@@ -81,8 +106,6 @@ if (typeof chrome !== "undefined" && chrome.storage) {
 		if (message.action === "changeColors") {
 			changeYourDialogueColors(message.bgColor);
 			changeGptTextColor(message.gptTextColor);
-		} else if (message.action === "defaultColors") {
-			applyDefaultColors();
 		} else if (message.action === "toggleColors") {
 			if (message.isOn) {
 				changeYourDialogueColors(message.bgColor);
